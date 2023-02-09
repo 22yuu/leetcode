@@ -2,6 +2,7 @@
  * @param {character[][]} grid
  * @return {number}
  */
+// my code - using dfs
 var numIslands = function (grid) {
   const n = grid.length;
   const m = grid[0].length;
@@ -41,4 +42,57 @@ var numIslands = function (grid) {
   }
 
   return answer;
+};
+
+// other code - using BFS
+
+var numIslands = function (grid) {
+  let count = 0;
+  if (grid.length === 0) {
+    return count;
+  }
+
+  const direction = [
+    [-1, 0],
+    [0, 1],
+    [1, 0],
+    [0, -1],
+  ];
+  let queue = [];
+
+  for (let row = 0; row < grid.length; row++) {
+    for (let col = 0; col < grid[0].length; col++) {
+      if (grid[row][col] === '1') {
+        count++;
+        queue.push([row, col]);
+        grid[row][col] = '0';
+
+        while (queue.length) {
+          let current = queue.shift();
+          const curRow = current[0];
+          const curCol = current[1];
+
+          for (let i = 0; i < direction.length; i++) {
+            const currentDir = direction[i];
+            const nextRow = curRow + currentDir[0];
+            const nextCol = curCol + currentDir[1];
+
+            if (
+              nextRow < 0 ||
+              nextCol < 0 ||
+              nextRow > grid.length - 1 ||
+              nextCol > grid[0].length - 1
+            )
+              continue;
+
+            if (grid[nextRow][nextCol] === '1') {
+              queue.push([nextRow, nextCol]);
+              grid[nextRow][nextCol] = '0';
+            }
+          }
+        }
+      }
+    }
+  }
+  return count;
 };

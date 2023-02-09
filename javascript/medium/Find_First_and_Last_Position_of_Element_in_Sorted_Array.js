@@ -22,3 +22,9 @@ var searchRange = function (nums, target) {
 
   return [first, last];
 };
+
+// other code
+
+const searchRange = function (nums, target) {
+  return [nums.findIndex((ele) => ele === target), nums.lastIndexOf(target)];
+};
